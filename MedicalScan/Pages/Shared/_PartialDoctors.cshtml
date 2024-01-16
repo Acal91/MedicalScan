@@ -1,0 +1,29 @@
+﻿
+@model List<MedicalScan.Models.Doctor>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="~/css/index.css">
+    </head>
+    <body>
+    @foreach (var doctor in Model)
+    {
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@doctor.Name</h5>
+                    @foreach(var ds in doctor.DoctorSpecialties)
+                    {
+                        <p class="card-text">@ds.Specialty.Name</p>
+                    }
+                    
+                </div>
+            </div>
+        </div>
+    }
+    </body>
+</html>
+
+

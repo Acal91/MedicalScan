@@ -1,0 +1,46 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Doctors";
+}
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="~/css/index.css">
+
+</head>
+
+<body>
+<h1 class="text-left">Doctors</h1>
+
+<div class="action">
+<form method="get" class="mb-3">
+    <label for="specialty" class="form-label">Specialty:</label>
+    <select id="specialty" name="specialty" asp-items="Model.SpecialtyList" class="form-select">
+        <option value="">All</option>
+    </select>
+</form>
+</div>
+
+<div id="doctorsList" class="row row-cols-1 row-cols-md-4 g-4">
+    @await Html.PartialAsync("Shared/_PartialDoctors", Model.Doctors)
+</div>
+
+@section Scripts {
+        <script>
+            document.getElementById("specialty").addEventListener("change", function () {
+                var selectedSpecialty = document.getElementById("specialty").value;
+
+                        fetch(`/Index?handler=FilteredDoctors&specialty=${selectedSpecialty}`)
+                        .then(response => response.text())
+                        .then(data => {
+                            document.getElementById("doctorsList").innerHTML = data;
+                        });
+
+            });
+        </script>
+}
+</body>
+
+</html>
